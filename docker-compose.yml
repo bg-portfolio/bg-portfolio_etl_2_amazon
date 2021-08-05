@@ -9,6 +9,7 @@ services:
             - PGDATA=/data/postgres
         volumes:
             - postgresdb:/data/postgres
+        #healthcehck : airflow db check - should return "INFO - Connection successful."
     webserver:
         image: apache/airflow
         entrypoint: ./scripts/entrypoint.sh
