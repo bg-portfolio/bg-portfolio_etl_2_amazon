@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+    postgres:
+        image: postgres
+        environment:
+            - POSTGRES_USER=airflow
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+            - PGDATA=/data/postgres
+        volumes:
+            - postgresdb:/data/postgres
+    webserver:
+        image: apache/airflow
+        entrypoint: ./scripts/entrypoint.sh
+        restart: always
+        depends_on:
+            - postgres
+            - scheduler
+        env_file:
+            - .env
+        volumes: &volumes
+            - ./dags:/opt/airflow/dags
+            - ./plugins:/opt/airflow/plugins
+            - ./scripts:/opt/airflow/scripts
+            - ./tests:/opt/airflow/tests
+            - ./logs:/opt/airflow/logs
+            - ./requirements.txt:/opt/airflow/requirements.txt
+        ports:
+            - "8080:8080"
+        healthcheck:
+            test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+            interval: 15s
+            timeout: 30s
+            retries: 5
+    scheduler:
+        image: apache/airflow
+        command: bash -c 'pip install -r /opt/airflow/requirements.txt; airflow db init; airflow scheduler'
+        restart: always
+        depends_on:
+            - postgres
+        env_file:
+            - .env
+        volumes: *volumes
+        ports:
+            - "8793:8793"
+        healthcheck:
+            test: ["CMD-SHELL", "[ -f /opt/airflow/airflow-scheduler.pid ]"]
+            interval: 30s
+            timeout: 30s
+            retries: 3
+volumes:
+    postgresdb:
