@@ -5,7 +5,6 @@ from pandas import DataFrame
 from time import sleep
 
 
-
 def _page_hopping(page_number: int, soup, driver) -> int:
     """page changing mechanism"""
     url_2 = soup.find('ul', {'class': 'a-pagination'})
@@ -103,10 +102,12 @@ def _save_data(collection: any, data: list, keyword: any, datatype: str, time: s
     -MongoDB, local db named 'amazon', collection 'webscrape'"""
     if datatype == "csv":
         amazon_df = DataFrame(data)
-        amazon_df.to_csv(f'ws_amazon_{keyword}_{time}.csv', index=False)
+        amazon_df.to_csv(
+            f'./dags/programs/ws_amazon/ws_amazon_{keyword}_{time}.csv', index=False)
     elif datatype == "json":
         amazon_df = DataFrame(data)
-        amazon_df.to_json(f'ws_amazon_{keyword}_{time}.json', index=False)
+        amazon_df.to_json(
+            f'./dags/programs/ws_amazon/ws_amazon_{keyword}_{time}.json', index=False)
     elif datatype == "db":
         amazon_df = DataFrame(data)
         amazon_df.reset_index(inplace=True)
@@ -114,11 +115,10 @@ def _save_data(collection: any, data: list, keyword: any, datatype: str, time: s
         collection.insert_many(amazon_dict)
 
 
-
 def _connect_mongo() -> any:
     client = MongoClient("mongodb://admin:admin@localhost:27017")
     sleep(5)
-    try: # test the connection
+    try:  # test the connection
         client.admin.command('ping')
     except ConnectionFailure:
         return "Server not available"

@@ -24,7 +24,7 @@ with DAG(
     default_args=default_args,
     description='Amazon web scrapper DAG',
     schedule_interval=timedelta(days=1),
-    tags=["amazon"]) as dag:
+        tags=["amazon"]) as dag:
 
     run_etl = PythonOperator(
         task_id='extract_transform_load',

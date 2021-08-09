@@ -4,7 +4,6 @@ from utils.processing import _page_hopping, _comprehensive_search, _captcha_solv
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
 from tqdm import tqdm
 from datetime import datetime
 
@@ -26,7 +25,7 @@ def web_scrape(category_1, category_2, keyword, index, quick_search, scrape):
 
     url = category_1[f'{category_2[index]}']
 
-    with WebDriverContext(webdriver.Chrome(ChromeDriverManager().install(), options=options)) as driver:
+    with WebDriverContext(webdriver.Remote(command_executor="http://selenium:4444/wd/hub", options=options)) as driver:
         _captcha_solver(driver, url)
 
         print('initializing, please wait.')

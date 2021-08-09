@@ -1,5 +1,5 @@
 keyword: rc cars
 index: "8"
-quick_search: True
+quick_search: False
 scrape: 12
-datatype: csv
+datatype: db

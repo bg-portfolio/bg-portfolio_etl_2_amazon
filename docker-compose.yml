@@ -49,5 +49,9 @@ services:
             interval: 30s
             timeout: 30s
             retries: 3
+    selenium:
+        image: selenium/standalone-chrome
+        ports:
+            - "4444:4444"
 volumes:
     postgresdb:
