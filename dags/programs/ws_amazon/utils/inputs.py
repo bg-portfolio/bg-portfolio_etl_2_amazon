@@ -1,4 +1,4 @@
-from os import path
+from os import path, getcwd
 import yaml
 
 
@@ -42,7 +42,7 @@ def get_quick_search() -> bool:
             print("Invalid input, please enter (q) or (c)!")
 
 
-def inputs(category: dict) -> tuple:
+def _inputs(category: dict) -> tuple:
     """inputs for scraping:
 
     keyword: searching phrase (str)
@@ -52,8 +52,8 @@ def inputs(category: dict) -> tuple:
     datatype: data format (str)
 
     config.yaml in the same folder as ws_amazon.py for input configuration, if not, through CLI"""
-    if path.exists("./ws_amazon.yaml"):
-        with open("./ws_amazon.yaml", "r") as f:
+    if path.exists("./dags/programs/ws_amazon/ws_amazon.yaml"):
+        with open("./dags/programs/ws_amazon/ws_amazon.yaml", "r") as f:
             data = yaml.safe_load(f)
             keyword = data["keyword"]
             index = data["index"]
@@ -78,7 +78,7 @@ def inputs(category: dict) -> tuple:
     return keyword, index, quick_search, scrape, datatype
 
 
-def categories_2() -> dict:
+def _categories_2() -> dict:
     """categories of amazon products"""
     category_2 = {'0': 'All-only 7 pages of search', '1': 'Arts & Crafts', '2': 'Automotive', '3': 'Baby',
                   '4': 'Beauty & Personal Care', '5': 'Books',
@@ -93,7 +93,7 @@ def categories_2() -> dict:
     return category_2
 
 
-def categories_1(keyword: str) -> dict:
+def _categories_1(keyword: str) -> dict:
     """urls of amazon categories"""
     category_1 = {'All-only 7 pages of search': f'https://www.amazon.com/s?k={keyword}&ref=nb_sb_noss_2',
                   'Arts & Crafts': f'https://www.amazon.com/s?k={keyword}&i=arts-crafts-intlship&ref=nb_sb_noss',

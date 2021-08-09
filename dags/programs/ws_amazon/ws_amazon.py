@@ -1,6 +1,6 @@
 from utils.amazon_shop import WebDriverContext
-from utils.inputs import inputs, categories_1, categories_2
-from utils.processing import page_hopping, comprehensive_search, captcha_solver, save_data
+from utils.inputs import _inputs, _categories_1, _categories_2
+from utils.processing import _page_hopping, _comprehensive_search, _captcha_solver, _save_data
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -27,7 +27,7 @@ def web_scrape(category_1, category_2, keyword, index, quick_search, scrape):
     url = category_1[f'{category_2[index]}']
 
     with WebDriverContext(webdriver.Chrome(ChromeDriverManager().install(), options=options)) as driver:
-        captcha_solver(driver, url)
+        _captcha_solver(driver, url)
 
         print('initializing, please wait.')
         pbar = tqdm(total=scrape)  # load bar 1
@@ -86,32 +86,32 @@ def web_scrape(category_1, category_2, keyword, index, quick_search, scrape):
                 if number_on_site > scrape:
                     break
             if number_on_site < scrape:  # page hopping mechanism
-                page_number = page_hopping(page_number, soup, driver)
+                page_number = _page_hopping(page_number, soup, driver)
             else:
                 break
         pbar.close()
 
         if not quick_search:  # determines quick or comprehensive search
-            comprehensive_search(item_url_list, master_list,
-                                 0, driver, tqdm, BeautifulSoup)
+            _comprehensive_search(item_url_list, master_list,
+                                  0, driver, tqdm, BeautifulSoup)
 
     return master_list, time
 
 
 def amazon_scrapper():
-    category_2 = categories_2()
-    keyword, index, quick_search, scrape, datatype = inputs(categories_2())
-    category_1 = categories_1(keyword)
+    category_2 = _categories_2()
+    keyword, index, quick_search, scrape, datatype = _inputs(_categories_2())
+    category_1 = _categories_1(keyword)
     master_list, time = web_scrape(category_1, category_2, keyword,
                                    index, quick_search, scrape)
     if datatype == "db":
-        from utils.processing import connect_mongo
-        database = connect_mongo()
+        from utils.processing import _connect_mongo
+        database = _connect_mongo()
     else:
         database = None
-    save_data(database, master_list, keyword, datatype, time)
+    _save_data(database, master_list, keyword, datatype, time)
     print('Done')
 
 
-# if __name__ == '__main__':
-#     amazon_scrapper()
+if __name__ == '__main__':
+    amazon_scrapper()

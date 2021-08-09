@@ -6,7 +6,7 @@ from time import sleep
 
 
 
-def page_hopping(page_number: int, soup, driver) -> int:
+def _page_hopping(page_number: int, soup, driver) -> int:
     """page changing mechanism"""
     url_2 = soup.find('ul', {'class': 'a-pagination'})
     url_2_a = url_2.find_all('a')
@@ -29,7 +29,7 @@ def page_hopping(page_number: int, soup, driver) -> int:
     return page_number
 
 
-def comprehensive_search(item_url_list: list, master_list: list, i: int, driver, tqdm, BeautifulSoup) -> None:
+def _comprehensive_search(item_url_list: list, master_list: list, i: int, driver, tqdm, BeautifulSoup) -> None:
     """iterating over item urls for more data:
     i: index of master_list"""
     print('collecting entries')
@@ -85,7 +85,7 @@ def comprehensive_search(item_url_list: list, master_list: list, i: int, driver,
     pbar_2.close()
 
 
-def captcha_solver(driver, url: str) -> None:
+def _captcha_solver(driver, url: str) -> None:
     """amazon bot solution for scraping, opening new tab"""
     for i in range(10):
         driver.get(url)
@@ -96,7 +96,11 @@ def captcha_solver(driver, url: str) -> None:
         sleep(2)
 
 
-def save_data(collection: any, data: list, keyword: any, datatype: str, time: str) -> None:
+def _save_data(collection: any, data: list, keyword: any, datatype: str, time: str) -> None:
+    """how to save data:
+    -csv
+    -json
+    -MongoDB, local db named 'amazon', collection 'webscrape'"""
     if datatype == "csv":
         amazon_df = DataFrame(data)
         amazon_df.to_csv(f'ws_amazon_{keyword}_{time}.csv', index=False)
@@ -111,12 +115,13 @@ def save_data(collection: any, data: list, keyword: any, datatype: str, time: st
 
 
 
-def connect_mongo() -> any:
+def _connect_mongo() -> any:
     client = MongoClient("mongodb://admin:admin@localhost:27017")
+    sleep(5)
     try: # test the connection
         client.admin.command('ping')
     except ConnectionFailure:
-        print("Server not available")
+        return "Server not available"
     db = client["amazon"]
     collection = db["webscrape"]
     return collection
