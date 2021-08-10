@@ -99,7 +99,7 @@ def web_scrape(category_1, category_2, keyword, index, quick_search, scrape):
 
 def amazon_scrapper():
     category_2 = _categories_2()
-    keyword, index, quick_search, scrape, datatype = _inputs(_categories_2())
+    keyword, index, quick_search, scrape, datatype = _inputs(category_2)
     category_1 = _categories_1(keyword)
     master_list, time = web_scrape(category_1, category_2, keyword,
                                    index, quick_search, scrape)

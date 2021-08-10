@@ -116,6 +116,7 @@ def _save_data(collection: any, data: list, keyword: any, datatype: str, time: s
 
 
 def _connect_mongo() -> any:
+    """connect to mongodb, db:amazon, collection:webscrape"""
     client = MongoClient("mongodb://root:root@mongodb:27017")
     sleep(5)
     try:  # test the connection

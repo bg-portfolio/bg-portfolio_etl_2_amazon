@@ -2,6 +2,7 @@ version: '3.8'
 services:
     postgres:
         image: postgres
+        container_name: airflow_db
         environment:
             - POSTGRES_USER=airflow
             - POSTGRES_PASSWORD=airflow
@@ -9,9 +10,10 @@ services:
             - PGDATA=/data/postgres
         volumes:
             - postgresdb:/data/postgres
-        #healthcehck : airflow db check - should return "INFO - Connection successful."
+        #healthcehck : "airflow db check"  should return "INFO - Connection successful."
     webserver:
         image: apache/airflow
+        container_name: airflow_webserver
         entrypoint: ./scripts/entrypoint.sh
         restart: always
         depends_on:
@@ -35,6 +37,7 @@ services:
             retries: 5
     scheduler:
         image: apache/airflow
+        container_name: airflow_scheduler
         command: bash -c 'pip install -r /opt/airflow/requirements.txt; airflow db init; airflow scheduler'
         restart: always
         depends_on:
@@ -51,7 +54,47 @@ services:
             retries: 3
     selenium:
         image: selenium/standalone-chrome
+        container_name: selenium
         ports:
             - "4444:4444"
+    mongodb:
+        image: mongo
+        container_name: mongodb
+        environment:
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=root
+        volumes:
+            - mongodb_data:/data/db
+        ports: 
+            - "27017:27017"
+        healthcheck:
+            test: echo 'db.runCommand({serverStatus:1}).ok' | mongo admin -u root -p root --quiet | grep 1
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 40s
+        restart: on-failure
+    mongo-express:
+        image: mongo-express
+        container_name: mongo_express
+        environment:
+        - ME_CONFIG_MONGODB_SERVER=mongodb
+        - ME_CONFIG_MONGODB_PORT=27017
+        - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+        - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+        - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+        - ME_CONFIG_BASICAUTH_USERNAME=admin
+        - ME_CONFIG_BASICAUTH_PASSWORD=admin
+        depends_on: 
+            - mongodb
+        ports: 
+            - "8081:8081"
+        healthcheck:
+            test:  wget --quiet --tries=3 --spider http://admin:admin@localhost:8081 || exit 1
+            interval: 30s
+            timeout: 10s
+            retries: 3
+        restart: always
 volumes:
     postgresdb:
+    mongodb_data:
