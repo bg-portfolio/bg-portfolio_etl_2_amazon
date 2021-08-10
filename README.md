@@ -1,0 +1,1 @@
+fully implemented, orginal docker-compose etl.
