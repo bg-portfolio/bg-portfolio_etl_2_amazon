@@ -116,12 +116,12 @@ def _save_data(collection: any, data: list, keyword: any, datatype: str, time: s
 
 
 def _connect_mongo() -> any:
-    client = MongoClient("mongodb://admin:admin@localhost:27017")
+    client = MongoClient("mongodb://root:root@mongodb:27017")
     sleep(5)
     try:  # test the connection
         client.admin.command('ping')
     except ConnectionFailure:
-        return "Server not available"
+        print("Server not available")
     db = client["amazon"]
     collection = db["webscrape"]
     return collection
