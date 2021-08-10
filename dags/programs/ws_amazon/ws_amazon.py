@@ -7,8 +7,6 @@ from selenium.webdriver.chrome.options import Options
 from tqdm import tqdm
 from datetime import datetime
 
-# TODO: product details + more
-
 
 def web_scrape(category_1, category_2, keyword, index, quick_search, scrape):
     options = Options()
