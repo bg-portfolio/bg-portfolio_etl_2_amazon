@@ -5,3 +5,4 @@ todo.txt
 logs/*
 *.csv
 !logs/.gitkeep
+.DS_Store

@@ -1,5 +1,10 @@
 keyword: rc cars
+# phrase to search for, [str]
 index: "8"
+# category of amazons' products, [(int) in str]
 quick_search: False
+# quick or comprehensive search [bool]
 scrape: 12
+# no of entries [int]
 datatype: db
+# how to save the data, [(csv or json or db) in str]

@@ -7,10 +7,14 @@ services:
             - POSTGRES_USER=airflow
             - POSTGRES_PASSWORD=airflow
             - POSTGRES_DB=airflow
-            - PGDATA=/data/postgres
         volumes:
             - postgresdb:/data/postgres
         #healthcehck : "airflow db check"  should return "INFO - Connection successful."
+        # healthcheck:
+        #     test: ["CMD", "test=`airflow db check`", "echo", ]
+        #     interval: 15s
+        #     timeout: 30s
+        #     retries: 5
     webserver:
         image: apache/airflow
         container_name: airflow_webserver
@@ -48,10 +52,10 @@ services:
         ports:
             - "8793:8793"
         healthcheck:
-            test: ["CMD-SHELL", "[ -f /opt/airflow/airflow-scheduler.pid ]"]
-            interval: 30s
+            test: ["CMD", "curl", "--fail", "http://localhost:8793/health"]
+            interval: 15s
             timeout: 30s
-            retries: 3
+            retries: 5
     selenium:
         image: selenium/standalone-chrome
         container_name: selenium
