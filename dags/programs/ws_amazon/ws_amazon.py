@@ -84,6 +84,7 @@ def web_scrape(category_1, category_2, keyword, index, quick_search, scrape):
                     break
             if number_on_site < scrape:  # page hopping mechanism
                 page_number = _page_hopping(page_number, soup, driver)
+                _captcha_solver(driver, url)  # checks if new page has captcha
             else:
                 break
         pbar.close()

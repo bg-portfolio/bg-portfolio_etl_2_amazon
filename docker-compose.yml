@@ -8,7 +8,7 @@ services:
             - POSTGRES_PASSWORD=airflow
             - POSTGRES_DB=airflow
         volumes:
-            - postgresdb:/data/postgres
+            - postgresdb_data:/var/lib/postgresql/data
         #healthcehck : "airflow db check"  should return "INFO - Connection successful."
         # healthcheck:
         #     test: ["CMD", "test=`airflow db check`", "echo", ]
@@ -61,6 +61,7 @@ services:
         container_name: selenium
         ports:
             - "4444:4444"
+            - "7900:7900" # noVNC for debugging, need to update to ver 4.prerelease
     mongodb:
         image: mongo
         container_name: mongodb
@@ -100,5 +101,5 @@ services:
             retries: 3
         restart: always
 volumes:
-    postgresdb:
+    postgresdb_data:
     mongodb_data:
