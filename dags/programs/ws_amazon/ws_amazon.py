@@ -19,7 +19,8 @@ def web_scrape(category_1, category_2, keyword, index, quick_search, scrape):
     # one of number limits used in number of scrapes. Scrape input is second one
     number_on_site = 1
     page_number = 1  # number used for page hopping
-    time = datetime.now().strftime("%y-%m-%d-%H:%M:%S")
+    time = datetime.now()
+    time = str(datetime.timestamp(time))
 
     url = category_1[f'{category_2[index]}']
 

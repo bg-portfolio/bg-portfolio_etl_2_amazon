@@ -42,7 +42,7 @@ services:
     scheduler:
         image: apache/airflow
         container_name: airflow_scheduler
-        command: bash -c 'pip install -r /opt/airflow/requirements.txt; airflow db init; airflow scheduler'
+        command: bash -c 'pip install -r /opt/airflow/requirements.txt; airflow db init ; airflow scheduler'
         restart: always
         depends_on:
             - postgres
@@ -51,11 +51,6 @@ services:
         volumes: *volumes
         ports:
             - "8793:8793"
-        healthcheck:
-            test: ["CMD", "curl", "--fail", "http://localhost:8793/health"]
-            interval: 15s
-            timeout: 30s
-            retries: 5
     selenium:
         image: selenium/standalone-chrome
         container_name: selenium
@@ -95,7 +90,7 @@ services:
         ports: 
             - "8081:8081"
         healthcheck:
-            test:  wget --quiet --tries=3 --spider http://admin:admin@localhost:8081 || exit 1
+            test:  wget --quiet --tries=2 --spider http://admin:admin@localhost:8081 || exit 1
             interval: 30s
             timeout: 10s
             retries: 3
