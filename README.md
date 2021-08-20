@@ -98,6 +98,7 @@ This project is deployed in local network.
 
 - postgres creating new, unused volume for each uptime (init db?)
 - in_stock col in scrape (sometimes missing)
+- mongo-express not displaying server stats
 
 
 ---
