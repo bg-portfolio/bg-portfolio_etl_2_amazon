@@ -45,14 +45,14 @@ It will take around 2-5 minutes for all the containers to launch and install dep
 Once that is done, open new terminal and run init.sh script to set up airflow users, meta database and mongo database.
 ```./init.sh```
 
-When that is done, open [localhost:8080](localhost:8080) and sign into Airflow Webserver using credentials:
-```login:admin\npassword:admin```
+When that is done, open [localhost:8080](https://localhost:8080/) and sign into Airflow Webserver using credentials:
+```login:admin password:admin```
 
 In the main Airflow dashboard, turn on the Amazon_ETL, it should start the dag automatically. If not, trigger it manually.
 
 Proceed into dags' log to view the progress.
 
-Once done, open [Dashboard](localhost:8501) and use the charts.
+Once done, open [Dashboard](https://localhost:8501/) and use the charts.
 
 HERE BE FURTHER INSTRUCTIONS (like click on amazon_etl button to turn it on etc, ADD SCREENSHOTS)
 
@@ -63,13 +63,13 @@ HERE BE FURTHER INSTRUCTIONS (like click on amazon_etl button to turn it on etc,
 ### Project Ports
 
 This project is deployed in local network.
-8080: Airflow Webserver
-8793: Airflow Scheduler
-4444: Selenium grid, 4444/wd/hub for instance access
-~~7900: Selenium noVNC~~
-8081: Mongo-express
-27017: MongoDB
-8501: Dashboard
+- 8080: Airflow Webserver
+- 8793: Airflow Scheduler
+- 4444: Selenium grid, 4444/wd/hub for instance access
+- ~~7900: Selenium noVNC~~
+- 8081: Mongo-express
+- 27017: MongoDB
+- 8501: Dashboard
 
 
 ---
@@ -111,7 +111,7 @@ Processor with at least 2 cores and 4gb of free RAM to spare.
 ---
 # License
 
-This project is under GNU General Public License v3.0 \n
+This project is under GNU General Public License v3.0
 To view the [License](../blob/main/LICENSE), click the link.
 
 
