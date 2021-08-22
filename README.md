@@ -45,9 +45,8 @@ It will take around 2-5 minutes for all the containers to launch and install dep
 Once that is done, open new terminal and run init.sh script to set up airflow users, meta database and mongo database.
 ```./init.sh```
 
-When that is done, open [localhost:8080](localhost:8080) and sign into Airflow Webserver using credentials;
-```login:admin
-password:admin```
+When that is done, open [localhost:8080](localhost:8080) and sign into Airflow Webserver using credentials:
+```login:admin\npassword:admin```
 
 In the main Airflow dashboard, turn on the Amazon_ETL, it should start the dag automatically. If not, trigger it manually.
 
