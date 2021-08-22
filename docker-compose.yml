@@ -2,6 +2,7 @@ version: '3.8'
 services:
     app:
         build:
+            context: .
             dockerfile: Dockerfile-dashboard
         container_name: dashboard
         restart: always
@@ -51,7 +52,7 @@ services:
     scheduler:
         image: apache/airflow
         container_name: airflow_scheduler
-        command: bash -c 'pip install -r /opt/airflow/requirements.txt; airflow db init ; airflow scheduler'
+        command: bash -c 'pip install -r /opt/airflow/requirements.txt; airflow scheduler'
         restart: always
         depends_on:
             - postgres

@@ -53,6 +53,8 @@ In the main Airflow dashboard, turn on the Amazon_ETL, it should start the dag a
 
 Proceed into dags' log to view the progress.
 
+Once done, open [Dashboard](localhost:8501) and use the charts.
+
 HERE BE FURTHER INSTRUCTIONS (like click on amazon_etl button to turn it on etc, ADD SCREENSHOTS)
 
 ## Getting Started
@@ -96,7 +98,7 @@ This project is deployed in local network.
 
 ### Fix
 
-- postgres creating new, unused volume for each uptime (init db?)
+- mongodb creating new volume each uptime
 - in_stock col in scrape (sometimes missing)
 - mongo-express not displaying server stats
 

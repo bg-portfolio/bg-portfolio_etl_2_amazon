@@ -1,6 +1,6 @@
 import streamlit as st
 from utils.graph_controls import graph_controls
-from utils.processing import load_dataframe, _connect_mongo
+from utils.processing import load_dataframe, _connect_mongo, transform_none_to_zero
 from streamlit.components.v1 import iframe
 
 
@@ -32,19 +32,15 @@ def views(link):
         if uploaded_file is not None:
             df, columns = load_dataframe(collection=uploaded_file)
 
-            st.sidebar.subheader("Visualize your data")
+            st.sidebar.write("Visualize your data")
 
-            show_data = st.sidebar.checkbox(label='Show data')
+            st.subheader("Data view")
+            # helper transformation for correct types
+            transform_none_to_zero(df=df)
+            number_of_rows = st.sidebar.number_input(
+                label='Select number of rows', min_value=2)
 
-            if show_data:
-                try:
-                    st.subheader("Data view")
-                    number_of_rows = st.sidebar.number_input(
-                        label='Select number of rows', min_value=2)
-
-                    st.dataframe(df.head(number_of_rows))
-                except Exception as e:
-                    print(e)
+            st.dataframe(df.head(number_of_rows))
 
             st.sidebar.subheader("Theme selection")
 
