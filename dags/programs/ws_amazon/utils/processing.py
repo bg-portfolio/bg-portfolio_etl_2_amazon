@@ -29,7 +29,7 @@ def _page_hopping(page_number: int, soup, driver) -> int:
 
 
 def _comprehensive_search(item_url_list: list, master_list: list, i: int, driver, tqdm, BeautifulSoup) -> None:
-    """iterating over item urls for more data:
+    """iterating over item urls for more data.
     i: index of master_list"""
     print('collecting entries')
     pbar_2 = tqdm(total=len(item_url_list))  # load bar 2
@@ -85,7 +85,7 @@ def _comprehensive_search(item_url_list: list, master_list: list, i: int, driver
 
 
 def _captcha_solver(driver, url: str) -> None:
-    """amazon bot solution for scraping, opening new tab"""
+    """amazon bot solution for blocked scraping, opening new tab"""
     for i in range(10):
         driver.get(url)
         captcha_bot = "Sorry, we just need to make sure you're not a robot. For best results, please make sure your browser is accepting cookies."
@@ -123,6 +123,7 @@ def _connect_mongo() -> any:
         client.admin.command('ping')
     except ConnectionFailure:
         print("Server not available")
+        return None
     db = client["amazon"]
     collection = db["webscrape"]
     return collection

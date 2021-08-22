@@ -3,6 +3,7 @@ import yaml
 
 
 def get_data() -> str:
+    """how to save the data"""
     while True:
         try:
             datatype = {"j": "json", "c": "csv", "d": "db"}[input().lower()]
@@ -12,6 +13,7 @@ def get_data() -> str:
 
 
 def get_index() -> str:
+    """index of amazon categories"""
     while True:
         try:
             index = int(input())
@@ -23,6 +25,7 @@ def get_index() -> str:
 
 
 def get_scrape() -> int:
+    """how many entries to scrape"""
     while True:
         try:
             scrape = int(input())
@@ -34,6 +37,7 @@ def get_scrape() -> int:
 
 
 def get_quick_search() -> bool:
+    """use quick or comprehensive search"""
     while True:
         try:
             quick_search = {"q": True, "c": False}[input().lower()]

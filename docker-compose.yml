@@ -1,5 +1,15 @@
 version: '3.8'
 services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile-dashboard
+        container_name: dashboard
+        restart: always
+        depends_on:
+        - mongodb
+        ports:
+        - "8501:8501"
     postgres:
         image: postgres
         container_name: airflow_db
@@ -7,10 +17,14 @@ services:
             - POSTGRES_USER=airflow
             - POSTGRES_PASSWORD=airflow
             - POSTGRES_DB=airflow
-            - PGDATA=/data/postgres
         volumes:
-            - postgresdb:/data/postgres
+            - postgresdb_data:/var/lib/postgresql/data
         #healthcehck : "airflow db check"  should return "INFO - Connection successful."
+        # healthcheck:
+        #     test: ["CMD", "test=`airflow db check`", "echo", ]
+        #     interval: 15s
+        #     timeout: 30s
+        #     retries: 5
     webserver:
         image: apache/airflow
         container_name: airflow_webserver
@@ -38,7 +52,7 @@ services:
     scheduler:
         image: apache/airflow
         container_name: airflow_scheduler
-        command: bash -c 'pip install -r /opt/airflow/requirements.txt; airflow db init; airflow scheduler'
+        command: bash -c 'pip install -r /opt/airflow/requirements.txt; airflow scheduler'
         restart: always
         depends_on:
             - postgres
@@ -47,16 +61,12 @@ services:
         volumes: *volumes
         ports:
             - "8793:8793"
-        healthcheck:
-            test: ["CMD-SHELL", "[ -f /opt/airflow/airflow-scheduler.pid ]"]
-            interval: 30s
-            timeout: 30s
-            retries: 3
     selenium:
         image: selenium/standalone-chrome
         container_name: selenium
         ports:
             - "4444:4444"
+            #- "7900:7900" # noVNC for debugging, need to update to ver 4.prerelease
     mongodb:
         image: mongo
         container_name: mongodb
@@ -90,11 +100,11 @@ services:
         ports: 
             - "8081:8081"
         healthcheck:
-            test:  wget --quiet --tries=3 --spider http://admin:admin@localhost:8081 || exit 1
+            test:  wget --quiet --tries=2 --spider http://admin:admin@localhost:8081 || exit 1
             interval: 30s
             timeout: 10s
             retries: 3
         restart: always
 volumes:
-    postgresdb:
+    postgresdb_data:
     mongodb_data:
