@@ -75,7 +75,7 @@ directory schema:
 
 Project schema:
 
-![Optional Text](../main/other/diagram.png)
+![Alt Text](../main/other/diagram.png?raw=true "diagram")
 
 
 ## About
