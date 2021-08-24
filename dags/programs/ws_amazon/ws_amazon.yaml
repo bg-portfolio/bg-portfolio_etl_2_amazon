@@ -7,4 +7,4 @@ quick_search: False
 scrape: 100
 # no of entries [int]
 datatype: db
-# how to save the data, ["csv" or "json" or "db"]
+# how to save the data, ["csv" or "json" or "db" for mongodb]
