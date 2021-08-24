@@ -78,7 +78,7 @@ def _comprehensive_search(item_url_list: list, master_list: list, i: int, driver
                 master_list[i].setdefault(
                     'in_stock', stock_product_form_1)
             product_details = product.find(
-                'div', {'id': 'detailBulletsWrapper_feature_div'})
+                'div', {'id': 'detailBulletsWrapper_feature_div'})  # no details for now
         i += 1
         pbar_2.update(1)
     pbar_2.close()
