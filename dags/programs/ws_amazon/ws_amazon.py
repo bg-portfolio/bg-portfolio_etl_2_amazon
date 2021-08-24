@@ -8,7 +8,12 @@ from tqdm import tqdm
 from datetime import datetime
 
 
-def web_scrape(category_1, category_2, keyword, index, quick_search, scrape):
+def web_scrape(category_1: dict, category_2: dict, keyword: str, index: str, quick_search: bool, scrape: int) -> tuple:
+    """
+    category_1: urls of amazon products
+    category_2: categories of amazon products
+    keyword, index, quick_search, scrape: inputs for scraping
+    """
     options = Options()
     options.add_argument('--incognito')
     options.headless = True
