@@ -18,7 +18,9 @@
 ---
 # Overview
 
-This is fully implemented [amazon shop](https://www.amazon.com/) ETL pipeline. Extraction is through web scraping program using [selenium](https://github.com/SeleniumHQ/selenium) and [beautiful soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/). Transformation implemented through [pandas](https://pandas.pydata.org/) and pys' dictionaries. Loading data into [MongoDB](https://www.mongodb.com/). ETL is orchestrated in [Airflow](https://airflow.apache.org/) using postgres, selenium is using remote selenium grid server, mongo has GUI in form of [mongo-express](https://github.com/mongo-express/mongo-express). Business graphs are available in a [streamlit](https://streamlit.io/) Dashboard.
+IMPORTANT NOTICE, This is proof of concept for personal use, not meant for comercial or monetary gain, all Amazon data is from public and freely available source complied with Amazons' TOS.
+
+This is fully implemented [Amazon shop](https://www.amazon.com/) ETL pipeline. Extraction is through web scraping program using [selenium](https://github.com/SeleniumHQ/selenium) and [beautiful soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/). Transformation implemented through [pandas](https://pandas.pydata.org/) and pys' dictionaries. Loading data into [MongoDB](https://www.mongodb.com/). ETL is orchestrated in [Airflow](https://airflow.apache.org/) using postgres, selenium is using remote selenium grid server, mongo has GUI in form of [mongo-express](https://github.com/mongo-express/mongo-express). Business graphs are available in a [streamlit](https://streamlit.io/) Dashboard.
 Everything is deployed in [Docker](https://www.docker.com/) compose.
 
 ## Project Schema
